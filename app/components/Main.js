@@ -1,46 +1,58 @@
 // Include React
-var React = require("react");
+import React from "react";
 
-var Main = React.createClass({
+import Search from "./Children/Search";
+import Saved from "./Children/Saved";
+
+class Main extends React.Component {
 
   // Here we render the component
-  render: function() {
+  render() {
 
     return (
-      <div className="container">
-
-        <div className="row">
-
+        <div>
           <div className="jumbotron">
-            <h1>React Router</h1>
-            <p><em>Because we can't afford to miss a minute of this video! #flylikeaneagle</em></p>
-            <a href="#/info"><button className="btn btn-default">Info</button></a>
-            <a href="#/chat"><button className="btn btn-default">Comments</button></a>
+            <h1>New York Times Articles</h1>
           </div>
-
-          <div className="row">
-            <div className="text-center">
-              <iframe
-                width="640"
-                height="360"
-                src="https://www.youtube.com/embed/K1lKk5IU4ZE?rel=0&amp;controls=0&amp;showinfo=0"
-              >
-              </iframe>
+          <div className="container content">
+            <div className="panel panel-info">
+              <div className="panel-heading">
+                <h3 className="panel-title">Search Parameters</h3>
+              </div>
+              <div className="panel-body">
+                <form role="form">
+                  <div className="form-group">
+                    <label>Search Term:</label>
+                    <input type="text" className="form-control" id="search" />
+                  </div>
+                  <div className="form-group">
+                    <label>Number of Records to Retrieve:</label>
+                      <select className="form-control" id="num-records">
+                        <option value="1">1</option>
+                        <option value="5" selected>5</option>
+                        <option value="10">10</option>
+                      </select>
+                  </div>
+                  <div className="form-group">
+                    <label>Start Year:</label>
+                    <input type="text" className="form-control start-year" />
+                  </div>
+                  <div className="form-group">
+                    <label>End Year:</label>
+                    <input type="text" className="form-control" id="end-year" />
+                  </div>
+                  <button type="submit" className="btn btn-primary" id="search-btn">Search</button>
+                  <button type="button" className="btn btn-default clear">Clear</button>
+                </form>
+              </div>
             </div>
-          </div>
-
-          <div className="container">
-
-            {/* Added this.props.children to dump all of the child components into place */}
-            {this.props.children}
-
+            <Search/>
+            <Saved/>
           </div>
         </div>
-
-      </div>
-    );
-  }
-});
+    );//return
+  }//render
+}//class
 
 // Export the component back for use in other files
-module.exports = Main;
+export default Main;
