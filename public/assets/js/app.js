@@ -1,12 +1,12 @@
 //Setup Variables
-var authKey = "b1fe253f41ce4e66819bdb044a84a61e";
+let authKey = "b1fe253f41ce4e66819bdb044a84a61e";
 
-var searchInput = "";
-var numArticles = 0;  
-var startYear = 0; 
-var endYear = 0;  
+let searchInput = "";
+let numArticles = 0;
+let startYear = 0;
+let endYear = 0;
 
-var queryURLBase = "http://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + authKey;
+let queryURLBase = "http://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + authKey;
 
 //on click function to start
 
