@@ -2,6 +2,7 @@
  * Created by ryanrodwell on 6/9/17.
  */
 import React from "react";
+import Results from "./Grandchildren/Results";
 
 class Saved extends React.Component {
     render() {
@@ -13,6 +14,7 @@ class Saved extends React.Component {
                   </div>
                   <div className="panel-body results">
                       {/*React Component*/}
+                      <Results />
                   </div>
               </div>
           </div>
