@@ -1,41 +1,17 @@
-// Include the React library
 import React from "react";
+import { Route, IndexRoute, Router, browserHistory } from "react-router";
 
-// Include the react-router module
-import router from "react-router";
-
-// Include the Route component for displaying individual routes
-let Route = router.Route;
-
-// Include the Router component to contain all our Routes
-// Here where we can pass in some configuration as props
-let Router = router.Router;
-
-// Include the hashHistory prop to handle routing client side without a server
-let hashHistory = router.hashHistory;
-
-// Include the IndexRoute (catch-all route)
-let IndexRoute = router.IndexRoute;
-
-// Reference the high-level components
 import Main from "../components/Main";
+import Search from "../components/Children/Search";
+import Saved from "../components/Children/Saved";
 
-
-// Export the Routes
-module.exports = (
-
-  // The high level component is the Router component
-  <Router history={hashHistory}>
-    <Route path="/" component={Main}>
-
-      {/* If user selects Info or Chat show the appropriate component */}
-      <Route path="info" component={Info} />
-      <Route path="chat" component={Chat} />
-
-      {/* If user selects any other path... we get the Info Route */}
-      <IndexRoute component={Info} />
-
-    </Route>
-  </Router>
-
+const routes = (
+    <Router history={browserHistory}>
+        <Route path="/" component={Main}>
+            <Route path="search" component={Search} />
+            <IndexRoute component={Saved} />
+        </Route>
+    </Router>
 );
+
+export default routes;

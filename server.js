@@ -2,10 +2,9 @@
  * Created by ryanrodwell on 6/9/17.
  */
 // Require our dependencies
-import express from "express";
-import mongoose from "mongoose";
-import expressHandlebars from "express-handlebars";
-import bodyParser from "body-parser";
+let express = require("express");
+let mongoose = require( "mongoose");
+let bodyParser = require("body-parser");
 
 // Set up our port to be either the host's designated port, or 3000
 let PORT = process.env.PORT || 3000;
@@ -17,7 +16,15 @@ let app = express();
 let router = express.Router();
 
 // Require our routes file pass our router object
-require("./config/routes")(router);
+require("./routes/routes")(router);
+
+
+// Run Morgan for Logging
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.text());
+app.use(bodyParser.json({type:'application/vnd.api+json'}));
 
 // Designate our public folder as a static directory
 app.use(express.static(__dirname + "/public"));
