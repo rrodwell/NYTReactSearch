@@ -33,7 +33,7 @@ app.use(express.static(__dirname + "/public"));
 app.use(router);
 
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
-let db = process.env.MONGODB_URI || "mongodb://localhost/nytreact";
+let db = process.env.MONGODB_URI || "mongodb://heroku_zwtrswz4:aedjl79n37a7egi0evvj6u30jo@ds127872.mlab.com:27872/heroku_zwtrswz4";
 
 // Connect mongoose to our database
 mongoose.connect(db, function(error) {
