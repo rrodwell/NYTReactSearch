@@ -5,14 +5,14 @@
 let axios = require('axios');
 
 // New York Times API
-let nytAPI = "097be422255e45a18b6864a8176f4a6c";
+let authKey = "b1fe253f41ce4e66819bdb044a84a61e";
 
 // Helper Functions
 let helpers = {
 
     runQuery: function(topic, startYear, endYear){
 
-        let queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + nytAPI + "&q=" + topic + "&begin_date=" + startYear + "0101&end_date=" + endYear + "0101";
+        let queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + authKey + "&q=" + topic + "&begin_date=" + startYear + "0101&end_date=" + endYear + "0101";
 
         return axios.get(queryURL)
             .then(function(response){
