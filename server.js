@@ -1,41 +1,83 @@
-/**
- * Created by ryanrodwell on 6/9/17.
- */
-// Require our dependecies
-let express = require("express");
-let mongoose = require("mongoose");
-let bluebird = require("bluebird");
-let bodyParser = require("body-parser");
+let express = require('express');
+let bodyParser = require('body-parser');
+let logger = require('morgan');
+let mongoose = require('mongoose');
 
-let routes = require("./routes/routes");
-
-// Set up a default port, configure mongoose, configure our middleware
-let PORT = process.env.PORT || 3000;
-
-mongoose.Promise = bluebird;
+let Article = require('./models/Article.js');
 
 let app = express();
+let PORT = process.env.PORT || 3000;
 
-app.use(bodyParser.urlencoded({ extended: true }));
+// Run Morgan for Logging
+app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(express.static(__dirname + "/public"));
-app.use("/", routes);
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.text());
+app.use(bodyParser.json({type:'application/vnd.api+json'}));
 
-let db = process.env.MONGODB_URI || "mongodb://heroku_zwtrswz4:aedjl79n37a7egi0evvj6u30jo@ds127872.mlab.com:27872/heroku_zwtrswz4";
+app.use(express.static('./public'));
 
-// Connect mongoose to our database
-mongoose.connect(db, function(error) {
-    // Log any errors connecting with mongoose
-    if (error) {
-        console.error(error);
-    }
-    // Or log a success message
-    else {
-        console.log("mongoose connection is successful");
-    }
+//mongoose.connect('mongodb://localhost/nytreact');
+mongoose.connect('mongodb://heroku_zwtrswz4:aedjl79n37a7egi0evvj6u30jo@ds127872.mlab.com:27872/heroku_zwtrswz4');
+
+let db = mongoose.connection;
+
+db.on('error', function (err) {
+    console.log('Mongoose Error: ', err);
 });
 
-// Listen on the port
+db.once('open', function () {
+    console.log('Mongoose connection successful.');
+});
+
+app.get('/', function(req, res){
+    res.sendFile('./public/index.html');
+});
+
+app.get('/api/saved', function(req, res) {
+
+    Article.find({})
+        .exec(function(err, doc){
+
+            if(err){
+                console.log(err);
+            }
+            else {
+                res.send(doc);
+            }
+        })
+});
+
+app.post('/api/saved', function(req, res){
+
+    var newArticle = new Article({
+        title: req.body.title,
+        date: req.body.date,
+        url: req.body.url
+    });
+
+    newArticle.save(function(err, doc){
+        if(err){
+            console.log(err);
+            res.send(err);
+        } else {
+            res.json(doc);
+        }
+    });
+
+});
+
+app.delete('/api/saved/:id', function(req, res){
+
+    Article.find({'_id': req.params.id}).remove()
+        .exec(function(err, doc) {
+            res.send(doc);
+        });
+
+});
+
+
+
 app.listen(PORT, function() {
-  console.log("Listening on port:" + PORT);
+    console.log("App listening on PORT: " + PORT);
 });
