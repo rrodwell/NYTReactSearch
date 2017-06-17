@@ -1,19 +1,16 @@
-var express = require("express");
+let express = require("express");
 
-var articlesController = require("../controllers/articlesController");
+let articlesController = require("../controllers/articlesController");
 
-var router = new express.Router();
+let router = new express.Router();
 
+router.get("/", articlesController.index);
 // Get all articles (or optionally a specific article with an id)
-router.get("/articles/:id?", articlesController.index);
+router.get("/api/saved", articlesController.saved);
 // Create a new articles using data passed in req.body
-router.post("/articles", articlesController.create);
-// Update an existing articles with a speicified id param, using data in req.body
-router.patch("/articles/:id", articlesController.update);
+router.post("/api/saved", articlesController.create);
 // Delete a specific articles using the id in req.params.id
-router.delete("/articles/:id", articlesController.destroy);
+router.delete("/api/saved/:id", articlesController.destroy);
 
 module.exports = router;
-
-
 
